@@ -1,49 +1,8 @@
-CREATE DATABASE IF NOT EXISTS `geeky_rebels`;
+CREATE DATABASE IF NOT EXISTS `dobby`;
 
-USE geeky_rebels;
+USE dobby;
 
-DROP TABLE IF EXISTS explore, mutual_fund_category, mutual_fund_index, mutual_funds, companies;
-
-use geeky_rebels;
-
---create table `explore` (
---    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
---    keyword VARCHAR(255) NOT NULL,
---    endpoint VARCHAR(255) NOT NULL
---);
---insert into `explore` (keyword, endpoint) values ('stocks', 'https://groww.in/stocks/filter?');
---insert into `explore` (keyword, endpoint) values ('mutual-funds', 'https://groww.in/mutual-funds/filter?');
-
---create table `mutual_fund_category` (
---    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
---    category VARCHAR(255) NOT NULL,
---    config VARCHAR(255) NOT NULL
---);
---insert into `mutual_fund_category` (category, config) values ('Debt', 'category=%5B%22Debt%22%5D');
---insert into `mutual_fund_category` (category, config) values ('Equity', 'category=%5B%22Equity%22%5D');
---
---create table `mutual_fund_index` (
---    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
---    index_name VARCHAR(255) NOT NULL,
---    config VARCHAR(255) NOT NULL
---);
---insert into `index` (index_name, config) values ('Nifty Bank', "index=Nifty%20Bank");
---insert into `index` (index_name, config) values ('Nifty 50', "index=Nifty%2050");
---insert into `index` (index_name, config) values ('Nifty 100', "index=Nifty%20100");
---insert into `index` (index_name, config) values ('BSE 100', "index=BSE%20100");
-
-create table `mutual_funds` (
-    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    collections VARCHAR(255) NOT NULL,
-    endpoint VARCHAR(255) NOT NULL
-);
-insert into `mutual_funds` (collections, endpoint) values ('groww mutual funds','groww-amc-mf');
-insert into `mutual_funds` (collections, endpoint) values ('high returns','best-high-return');
-insert into `mutual_funds` (collections, endpoint) values ('sip with 500 rupees','best-sip-with-500');
-insert into `mutual_funds` (collections, endpoint) values ('tax saving','best-tax-saving');
-insert into `mutual_funds` (collections, endpoint) values ('large cap funds','best-large-cap');
-insert into `mutual_funds` (collections, endpoint) values ('mid cap funds','best-mid-cap');
-insert into `mutual_funds` (collections, endpoint) values ('small cap funds','best-small-cap');
+DROP TABLE IF EXISTS companies;
 
 create table `companies` (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,

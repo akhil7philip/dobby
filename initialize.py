@@ -9,7 +9,7 @@ def init_pinecone():
     from langchain.text_splitter import RecursiveCharacterTextSplitter
     from langchain.embeddings import OpenAIEmbeddings
 
-    with open('docs/hns_doc.txt') as f:
+    with open('docs/data_dump.txt') as f:
         data = f.read()
 
     text_splitter = RecursiveCharacterTextSplitter(
@@ -26,7 +26,7 @@ def init_pinecone():
         environment=os.getenv('PINECONE_ENV')
     )
 
-    index_name = "geeky-rebels"
+    index_name = "dobby"
     if index_name not in pinecone.list_indexes():
         # pinecone.delete_index(index_name)
         pinecone.create_index(

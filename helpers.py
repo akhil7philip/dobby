@@ -1,12 +1,11 @@
 import time
 import os
 import logging
-
 from langchain import OpenAI, SQLDatabase
 from langchain_experimental.sql import SQLDatabaseChain
 from langchain.chat_models import ChatOpenAI
+
 import initialize
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 openai_key = os.getenv('OPENAI_API_KEY')
 db_user = os.getenv('DB_USER')
@@ -58,30 +57,15 @@ def fetch_hns_response(query: str):
 
 def fetch_general_response(question):
     query = """
-    This is the input question: {question}
+    feed with the input question, first create correct mysql query with right syntax which can run, 
+    secondly observe the results of the query and finally return the answer.
+    Use the below format while answering:
 
-    If the input question has keywords like company names and asks for these following actions,
-    buy or sell, show profit, returns, trend;
-    then use the companies table to return the concat value of 'https://groww.in/stocks/' and 
-    search_id for the relevant company name from company_name using the correct mysql query.
-    The return value is a logical REST url from the above values.
-
-    If the input question has keywords like industry average,
-    then take average of all stocks corresponding to that industry given in tag column of company table
-    using the correct mysql query.
-
-    If the input question has "mutual funds" keyword, 
-    then use the mutual_funds table to return the concat value of 'https://groww.in/mutual-funds/collections/' and 
-    endpoint value based on the collections column using the correct mysql query.
-    for example, if they ask large cap mutual fund, then collection='Large cap funds', endpoint='best-large-cap' and 
-    return 'https://groww.in/mutual-funds/collections/best-large-cap'
-    The return value is a logical REST url from the above values.
-
-    If the input question depends on general financial knowledge like what, how, when about a company etc, 
-    then respond to the user in less than 100 words as though the user is an intelligent person,
-    but with simple financial terms that the user can understand.
-
-    The return statement should be relevant to the question asked, using the above classification provided above.
+    Input: Input Question here
+    SQLQuery: SQL Query to run
+    SQLResult: Result of the SQLQuery
+    Answer: Final answer here
+    {question}
     """
 
     llm = OpenAI(temperature=0, openai_api_key=openai_key)
@@ -97,30 +81,7 @@ def fetch_general_response(question):
     except Exception as e:
         logging.error(e)
         return None
-        old_query = """
-        This is the input question: {question}
-        
-        If the input question has keywords like company names and asks for these following actions,
-        buy or sell, show profit, returns, trend;
-        then use the companies table to return the concat value of 'https://groww.in/stocks/' and 
-        search_id for the relevant company name from company_name using the correct mysql query.
-        return the SQLResult
-        
-        If the input question has keywords like industry average,
-        then take average of all stocks corresponding to that industry given in tag column of company table
-        using the correct mysql query.
-        
-        If the input question has mutual funds keyword, 
-        then return the concat value of endpoint from explore table, config columns from mutual fund category table if requested.
-        The return value is a logical REST url from the above values.
-        
-        If the input question depends on general financial knowledge like what, how, when about a company etc, 
-        then respond to the user in less than 100 words as though the user is an intelligent person,
-        but with simple financial terms that the user can understand.
-        
-        
-        The return statement should be relevant to the question asked, using the above classification provided above.
-        """
+
 
 def get_translation_whisper(input_audio_file):
     from transformers import pipeline
